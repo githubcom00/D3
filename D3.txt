@@ -1,0 +1,29 @@
+Query 1. 
+
+select * from employee where eid in(select w1.eid from
+empproj w1,empproj w2 where w1.pno=5 and w2.pno=10 and
+w1.eid=w2.eid);
+ 
+Query 2. 
+select * from employee where eid in(select eid from
+dependent group by eid having count(eid)>=2);
+
+Query 3. 
+select pname from project where pno in(select pno from
+empproj group by pno having count(pno)=(select max(count(pno)) from
+empproj group by pno))
+
+Query 4.
+ select * from employee where eid not in (select eid from
+dependent);
+ 
+Query 5. 
+
+select * from employee where eid in(select eid from empproj
+group by eid having sum(hpw)= 2 (select max(sum(hpw)) from empproj
+group by eid));
+ 
+Query 6.
+
+create view empcount(dno,no_of_emp) as select dno,count(dno) from
+employeee group by dno;
